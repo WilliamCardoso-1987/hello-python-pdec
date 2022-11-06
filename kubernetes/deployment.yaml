@@ -1,32 +1,41 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-python-service
+  name: hello-python-pdec-service
 spec:
   selector:
-    app: hello-python
+    app: hello-python-pdec
   ports:
   - protocol: "TCP"
-    port: 6000
+    port: 5005
     targetPort: 5000
   type: LoadBalancer
 
-
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-python
+  name: hello-python-pdec
 spec:
+  selector:
+    matchLabels:
+      app: hello-python-pdec
   replicas: 4
   template:
     metadata:
       labels:
-        app: hello-python
+        app: hello-python-pdec
     spec:
       containers:
-      - name: hello-python
-        image: hello-python:latest
+      - name: hello-python-pdec
+        image: williamcardosoti/hello-python-pdec:1.2
         imagePullPolicy: Never
         ports:
         - containerPort: 5000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
