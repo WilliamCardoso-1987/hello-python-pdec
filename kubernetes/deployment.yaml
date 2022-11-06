@@ -4,7 +4,7 @@ metadata:
   name: hello-python-pdec-service
 spec:
   selector:
-    app: hello-python-pdec
+    app: hello-python-pdec-v1.3
   ports:
   - protocol: "TCP"
     port: 5005
@@ -15,11 +15,11 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-python-pdec
+  name: hello-python-pdec-v1.3
 spec:
   selector:
     matchLabels:
-      app: hello-python-pdec
+      app: hello-python-pdec #precisa ser igual ao template/metadata/labels/app
   replicas: 4
   template:
     metadata:
@@ -27,7 +27,7 @@ spec:
         app: hello-python-pdec
     spec:
       containers:
-      - name: hello-python-pdec
+      - name: hello-python-pdec-ctn
         image: williamcardosoti/hello-python-pdec:1.3
         imagePullPolicy: Never
         ports:
